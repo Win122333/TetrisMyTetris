@@ -1,5 +1,6 @@
 package com.vsu.cs.course2;
 
+import com.vsu.cs.course2.Figures.Ge_Left;
 import com.vsu.cs.course2.Figures.OriginFigure;
 import com.vsu.cs.course2.Figures.Square;
 import com.vsu.cs.course2.Figures.Triangle;
@@ -9,7 +10,5 @@ import com.vsu.cs.course2.Figures.Triangle;
 public class Main {
     public static void main(String[] args) {
         FrameMain fm = new FrameMain();
-
-
     }
 }
