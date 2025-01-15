@@ -7,8 +7,8 @@ import java.awt.*;
 public class GamePlaceholder {
     private static final int HEIGHT = 20;
     private static final int WIDTH = 10;
-    private static final int START_X = 100;
-    private static final int START_Y = 100;
+    private static final int START_X = 0;
+    private static final int START_Y = 120;
 
     private static final int SIZE_OF_SQUARE = 30;
 
