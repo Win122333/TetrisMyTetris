@@ -6,14 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.Random;
 
 public class FrameMain extends JFrame implements KeyListener {
     private JPanel panelMain;
     private JPanel panelForDraw;
-    private OriginFigure currFigure;
-    public static boolean fl = false;
+
+    private static final OriginFigure[] ARR_OF_ALL_FIGURES = new OriginFigure[] {new Ge_Left(), new Ge_Right(), new Square(), new Triangle(), new Zet_Left(), new Zet_Right()};
+    private OriginFigure currFigure = new Zet_Left();
+    private final Timer timer = new Timer(1000, e -> {
+        currFigure = ARR_OF_ALL_FIGURES[new Random().nextInt(ARR_OF_ALL_FIGURES.length)];
+        repaint();
+    });
 
     public FrameMain() {
         setBounds(700, 100, 500, 800);
@@ -23,14 +27,18 @@ public class FrameMain extends JFrame implements KeyListener {
         setVisible(true);
         panelForDraw.setVisible(true);
         addKeyListener(this);
+
+
+        timer.start();
     }
 
     @Override
     public void paint(Graphics g) {
+        removeAll();
         GamePlaceholder gp = new GamePlaceholder();
         gp.drawGamePlaceholder(g);
-        Zet_Right t = new Zet_Right();
-        t.draw(g);
+        currFigure.draw(g);
+        revalidate();
 
     }
 
@@ -41,13 +49,15 @@ public class FrameMain extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            currFigure.rotate();
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println(1);
+
         }
     }
 }
