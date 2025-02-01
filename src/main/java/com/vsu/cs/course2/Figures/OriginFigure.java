@@ -34,16 +34,30 @@ public abstract class OriginFigure {
         position = (position + 1) % 4;
     }
 
+//    public void draw(Graphics g) {
+//        Graphics2D g2d = (Graphics2D) g;
+//        RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        g2d.setRenderingHints(rh);
+//
+//        g2d.setColor(color);
+//        for (int i = 0; i < 4; i++) {
+//            for (int j = 0; j < 4; j++) {
+//                if (mat[position][j][i]) {
+//                    g2d.fillRect(sizeOfSquare + (i + 1) * sizeOfSquare + x, sizeOfSquare + (j + 1) * sizeOfSquare + y, sizeOfSquare, sizeOfSquare);
+//                }
+//            }
+//        }
+//    }
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);
 
         g2d.setColor(color);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (mat[position][j][i]) {
-                    g2d.fillRect(sizeOfSquare + (i + 1) * sizeOfSquare + x, sizeOfSquare + (j + 1) * sizeOfSquare + y, sizeOfSquare, sizeOfSquare);
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j][position]) {
+                    g2d.fillRect(j * 5, i * 5, sizeOfSquare, sizeOfSquare);
                 }
             }
         }

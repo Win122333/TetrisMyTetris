@@ -5,7 +5,7 @@ import java.awt.*;
 public class Square extends OriginFigure {
     @Override
     public void fillMat() {
-        mat = new boolean[4][4][4];
+        mat = new boolean[25][10][4];
         mat[0][1][1] = true;
         mat[0][1][2] = true;
         mat[0][2][1] = true;
