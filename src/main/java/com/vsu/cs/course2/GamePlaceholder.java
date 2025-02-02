@@ -1,13 +1,11 @@
 package com.vsu.cs.course2;
 
-import com.vsu.cs.course2.Figures.OriginFigure;
-
 import java.awt.*;
 
 public class GamePlaceholder {
-    private static final int HEIGHT = 20;
-    private static final int WIDTH = 10;
-    private static final int START_X = 0;
+    public static final int HEIGHT = 20;
+    public static final int WIDTH = 10;
+    private static final int START_X = -30;
     private static final int START_Y = 120;
 
     private static final int SIZE_OF_SQUARE = 30;
@@ -17,7 +15,7 @@ public class GamePlaceholder {
 
     public OriginFigure[][] allFiguresOnGame = new OriginFigure[HEIGHT][WIDTH];
 
-    public void drawGamePlaceholder (Graphics g) {
+    public void draw (Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHints(rh);

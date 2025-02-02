@@ -4,10 +4,8 @@ import com.vsu.cs.course2.Figures.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 public class FrameMain extends JFrame implements KeyListener {
     private JPanel panelMain;
@@ -17,7 +15,9 @@ public class FrameMain extends JFrame implements KeyListener {
     private static final int GLOBAL_TICK = 1000;
 
     private static final OriginFigure[] ARR_OF_ALL_FIGURES = new OriginFigure[] {new Ge_Left(), new Ge_Right(), new Square(), new Triangle(), new Zet_Left(), new Zet_Right()};
+    private GamePlaceholder gamePlaceholder = new GamePlaceholder();
     private OriginFigure currFigure = new Zet_Left();
+
     private Timer timer = new Timer(time, e -> {
 //        currFigure = ARR_OF_ALL_FIGURES[new Random().nextInt(ARR_OF_ALL_FIGURES.length)];
         currFigure.y = currFigure.y + 30;
@@ -41,11 +41,19 @@ public class FrameMain extends JFrame implements KeyListener {
     @Override
     public void paint(Graphics g) {
         removeAll();
-        GamePlaceholder gp = new GamePlaceholder();
-        gp.drawGamePlaceholder(g);
+        System.out.println(GameplayService.isCollision(currFigure, gamePlaceholder));
+        if (GameplayService.isCollision(currFigure, gamePlaceholder)) {
+            GameplayService.addFigureToPlaceholder(currFigure, gamePlaceholder);
+            currFigure = new Triangle();
+        }
+        gamePlaceholder.allFiguresOnGame[17][4] = currFigure;
+        gamePlaceholder.allFiguresOnGame[18][4] = currFigure;
+        gamePlaceholder.allFiguresOnGame[17][5] = currFigure;
+
+        gamePlaceholder.allFiguresOnGame[6][3] = new Ge_Right();
+        gamePlaceholder.draw(g);
         currFigure.draw(g);
         revalidate();
-
     }
 
     @Override
@@ -61,14 +69,18 @@ public class FrameMain extends JFrame implements KeyListener {
                 repaint();
             }
             case KeyEvent.VK_DOWN -> {
-                updateTimer();
+//                updateTimer();
+                currFigure.goDown();
+                System.out.println(currFigure.getPosition());
             }
             case KeyEvent.VK_LEFT -> {
-                currFigure.x = currFigure.x - 30;
+//                currFigure.x = currFigure.x - 30;
+                currFigure.goLeft();
                 repaint();
             }
             case KeyEvent.VK_RIGHT -> {
-                currFigure.x = currFigure.x +30;
+//                currFigure.x = currFigure.x +30;
+                currFigure.goRight();
                 repaint();
             }
         }
