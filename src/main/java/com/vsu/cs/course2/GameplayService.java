@@ -55,7 +55,7 @@ public class GameplayService {
         }
     }
 
-    private static boolean canGoDown(boolean[][] mat) {
+    public static boolean canGoDown(boolean[][] mat) {
         for (int j = 0; j < mat[0].length; j++) {
             if (mat[mat.length - 1][j]) {
                 return false;
@@ -121,28 +121,33 @@ public class GameplayService {
             }
         }
     }
+    private static boolean[][] goDown(boolean[][] mat) {
+        boolean[][] copyMat = mat.clone();
+        if (canGoDown(copyMat)) {
+            for (int i = copyMat.length - 1; i > 0; i--) {
+                copyMat[i] = copyMat[i - 1];
+            }
+            copyMat[0] = new boolean[10];
+            return copyMat;
+        }
+        return mat;
+    }
     public static boolean goFigureDown(OriginFigure figure, GamePlaceholder placeholder) {
         boolean[][][] mat = figure.getMat();
 
-        for (int position = 0; position < mat.length; position++) {
-            if (canGoDown(mat[position])) {
-                boolean[][] copyMat = mat[position].clone();
-                for (int i = copyMat.length - 1; i > 0; i--) {
-                    copyMat[i] = copyMat[i - 1];
-                }
-                copyMat[0] = new boolean[10];
-
-                if (!isCollision(copyMat, placeholder)) {
-                    mat[position] = copyMat;
-                }
-                else {
-                    addFigureToPlaceholder(figure, placeholder);
-                    return true;
-                }
-            }
-            else {
-                addFigureToPlaceholder(figure, placeholder);
-                return true;
+        boolean[][] newMat = goDown(mat[figure.position]);
+        if (!canGoDown(mat[figure.position])) {
+            addFigureToPlaceholder(figure, placeholder);
+            return true;
+        }
+        if (isCollision(newMat, placeholder)) {
+            addFigureToPlaceholder(figure, placeholder);
+            return true;
+        }
+        else {
+            for (int position = 0; position < mat.length; position++) {
+                boolean[][] downMat = goDown(mat[position]);
+                mat[position] = downMat;
             }
         }
         return false;

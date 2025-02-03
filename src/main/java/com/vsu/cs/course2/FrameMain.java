@@ -1,6 +1,7 @@
 package com.vsu.cs.course2;
 
 import com.vsu.cs.course2.Figures.*;
+import com.vsu.cs.course2.Figures.Long;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +12,14 @@ import java.util.Random;
 public class FrameMain extends JFrame implements KeyListener {
     private JPanel panelMain;
     private JPanel panelForDraw;
-    private int time = 1500;
+    private int time = 750;
     public static boolean f = false;
 
     private static final int GLOBAL_TICK = 1000;
 
     private static final OriginFigure[] ARR_OF_ALL_FIGURES = new OriginFigure[] {new Ge_Left(), new Ge_Right(), new Square(), new Triangle(), new Zet_Left(), new Zet_Right()};
     private GamePlaceholder gamePlaceholder = new GamePlaceholder();
-    private OriginFigure currFigure = new Zet_Left();
+    private OriginFigure currFigure = new Ge_Right();
     private Timer timer = new Timer(time, e -> {
         if (GameplayService.goFigureDown(currFigure, gamePlaceholder)) {
             currFigure = getRandomFigure();
@@ -78,6 +79,12 @@ public class FrameMain extends JFrame implements KeyListener {
                 GameplayService.goFigureRight(currFigure, gamePlaceholder);
                 repaint();
             }
+            case KeyEvent.VK_SPACE -> {
+                while (!GameplayService.goFigureDown(currFigure, gamePlaceholder)) {
+
+                }
+                updateTimer();
+            }
         }
     }
 
@@ -97,7 +104,7 @@ public class FrameMain extends JFrame implements KeyListener {
 
     private OriginFigure getRandomFigure() {
         Random rnd = new Random();
-        int ind = rnd.nextInt(6);
+        int ind = rnd.nextInt(7);
         switch (ind) {
             case 0 :
                 return new Ge_Left();
@@ -111,9 +118,8 @@ public class FrameMain extends JFrame implements KeyListener {
                 return new Zet_Left();
             case 5:
                 return new Zet_Right();
-//            case 6:
-//                return null;
-//                //дописать палку
+            case 6:
+               return new Long();
         }
         return null;
     }
