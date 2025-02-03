@@ -12,6 +12,7 @@ public class FrameMain extends JFrame implements KeyListener {
     private JPanel panelMain;
     private JPanel panelForDraw;
     private int time = 1500;
+    public static boolean f = false;
 
     private static final int GLOBAL_TICK = 1000;
 
@@ -20,7 +21,8 @@ public class FrameMain extends JFrame implements KeyListener {
     private OriginFigure currFigure = new Zet_Left();
     private Timer timer = new Timer(time, e -> {
         if (GameplayService.goFigureDown(currFigure, gamePlaceholder)) {
-            currFigure = ARR_OF_ALL_FIGURES[new Random().nextInt(ARR_OF_ALL_FIGURES.length)];
+            currFigure = getRandomFigure();
+            GameplayService.deleteAllLines(gamePlaceholder);
         }
         repaint();
     });
@@ -46,6 +48,7 @@ public class FrameMain extends JFrame implements KeyListener {
     @Override
     public void paint(Graphics g) {
         removeAll();
+
         gamePlaceholder.draw(g);
 //        currFigure.goDown();
         currFigure.draw(g);
@@ -90,5 +93,28 @@ public class FrameMain extends JFrame implements KeyListener {
         timer.stop();
         timer.setInitialDelay(0);
         timer.start();
+    }
+
+    private OriginFigure getRandomFigure() {
+        Random rnd = new Random();
+        int ind = rnd.nextInt(6);
+        switch (ind) {
+            case 0 :
+                return new Ge_Left();
+            case 1:
+                return new Ge_Right();
+            case 2 :
+                return new Square();
+            case 3:
+                return new Triangle();
+            case 4 :
+                return new Zet_Left();
+            case 5:
+                return new Zet_Right();
+//            case 6:
+//                return null;
+//                //дописать палку
+        }
+        return null;
     }
 }

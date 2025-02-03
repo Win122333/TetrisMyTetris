@@ -1,6 +1,38 @@
 package com.vsu.cs.course2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameplayService {
+    private static List<Integer> getFullLines(GamePlaceholder placeholder) {
+        List<Integer> indexes = new ArrayList<>();
+        for (int row = 0; row < placeholder.allFiguresOnGame.length; row++) {
+            boolean f = true;
+            for (int column = 0; column < placeholder.allFiguresOnGame[row].length; column++) {
+                if (placeholder.allFiguresOnGame[row][column] == null) {
+                    f = false;
+                    break;
+                }
+            }
+            if (f) {
+                indexes.add(row);
+            }
+        }
+        return indexes;
+    }
+    private static void deleteAllLinesByInd(GamePlaceholder placeholder, List<Integer> ind) {
+        for (int index : ind) {
+            for (int row = index; row > 0; row--) {
+                placeholder.allFiguresOnGame[row] = placeholder.allFiguresOnGame[row - 1];
+            }
+            placeholder.allFiguresOnGame[0] = new OriginFigure[placeholder.allFiguresOnGame[0].length];
+        }
+    }
+    public static int deleteAllLines(GamePlaceholder placeholder) {
+        List<Integer> linesInd = getFullLines(placeholder);
+        deleteAllLinesByInd(placeholder, linesInd);
+        return linesInd.size();
+    }
     private static boolean isCollision(boolean[][] mat, GamePlaceholder placeholder) {
         for (int i = 0; i < GamePlaceholder.HEIGHT; i++) {
             for (int j = 0; j < GamePlaceholder.WIDTH; j++) {
